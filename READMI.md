@@ -17,11 +17,11 @@ docker compose up -d
 
 ## RNs (Regras de negócios)
 
-- [ ] O usuário não deve poder se cadastrar com um e-mail duplicado;
+- [x] O usuário não deve poder se cadastrar com um e-mail duplicado;
 
 ## RNFS (Requisitos não-funcionais)
 
-- [ ] A senha do usuário precisa estar criptografada;
+- [x] A senha do usuário precisa estar criptografada;
 - [X] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] As mensagens deve ser listadas de acordo com sua data;
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
