@@ -2,6 +2,10 @@
 
 Chat style app.
 
+Start docker container:
+
+docker compose up -d
+
 ## RFs (Requisitos functionais)
 
 - [ ] Deve ser possível se cadastrar;
@@ -18,6 +22,6 @@ Chat style app.
 ## RNFS (Requisitos não-funcionais)
 
 - [ ] A senha do usuário precisa estar criptografada;
-- [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
+- [X] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] As mensagens deve ser listadas de acordo com sua data;
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
