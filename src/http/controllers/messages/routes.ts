@@ -3,8 +3,8 @@ import { verifyJwt } from '../middlewares/verify-jwt'
 import { send } from './send'
 import { list } from './list'
 
-export async function userRoutes(app: FastifyInstance) {
+export async function messageRoutes(app: FastifyInstance) {
   /** Authenticated **/
-  app.get('/message/send', { onRequest: [verifyJwt] }, send)
+  app.post('/message/send', { onRequest: [verifyJwt] }, send)
   app.get('/messages', { onRequest: [verifyJwt] }, list)
 }
