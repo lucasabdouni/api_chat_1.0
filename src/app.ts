@@ -5,6 +5,7 @@ import { env } from './env'
 import { ZodError } from 'zod'
 import fastifyCookie from '@fastify/cookie'
 import { messageRoutes } from './http/controllers/messages/routes'
+import fastifyCors from '@fastify/cors'
 
 export const app = fastify()
 
@@ -20,7 +21,9 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
-
+app.register(fastifyCors, {
+  origin: '*',
+})
 app.register(userRoutes)
 app.register(messageRoutes)
 
