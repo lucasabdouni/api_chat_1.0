@@ -45,11 +45,11 @@ export async function authenticate(
       .setCookie('refreshToken', refreshToken, {
         path: '/',
         secure: true,
-        sameSite: true,
-        httpOnly: true,
+        sameSite: 'none',
+        httpOnly: false,
       })
       .status(200)
-      .send({ token })
+      .send({ token, refreshToken })
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(400).send({ message: err.message })

@@ -1,13 +1,22 @@
 import fastify from 'fastify'
-import { userRoutes } from './http/controllers/users/routes'
 import fastifyJwt from '@fastify/jwt'
-import { env } from './env'
-import { ZodError } from 'zod'
 import fastifyCookie from '@fastify/cookie'
-import { messageRoutes } from './http/controllers/messages/routes'
 import fastifyCors from '@fastify/cors'
 
+import { env } from './env'
+import { ZodError } from 'zod'
+
+import { messageRoutes } from './http/controllers/messages/routes'
+import { userRoutes } from './http/controllers/users/routes'
+
 export const app = fastify()
+
+app.register(fastifyCors, {
+  origin: '*',
+  credentials: true,
+})
+app.register(userRoutes)
+app.register(messageRoutes)
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
@@ -21,11 +30,6 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
-app.register(fastifyCors, {
-  origin: '*',
-})
-app.register(userRoutes)
-app.register(messageRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

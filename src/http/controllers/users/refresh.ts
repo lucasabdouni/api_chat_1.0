@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function refresh(request: FastifyRequest, reply: FastifyReply) {
-  await request.jwtVerify({ onlyCookie: true })
+  await request.jwtVerify()
 
   const token = await reply.jwtSign(
     {},
@@ -26,9 +26,9 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply) {
     .setCookie('refreshToken', refreshToken, {
       path: '/',
       secure: true,
-      sameSite: true,
-      httpOnly: true,
+      sameSite: 'none',
+      httpOnly: false,
     })
     .status(200)
-    .send({ token })
+    .send({ token, refreshToken })
 }
