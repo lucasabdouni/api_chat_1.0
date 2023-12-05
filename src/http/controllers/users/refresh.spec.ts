@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import request from 'supertest'
 import { app } from '@/app'
+import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
 describe('Refresh Token (e2e)', () => {
   beforeAll(async () => {
@@ -11,31 +12,19 @@ describe('Refresh Token (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to refresh a token', async () => {
-    await request(app.server).post('/users').send({
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456',
-    })
-
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'johndoe@example.com',
-      password: '123456',
-    })
-
-    const cookies = authResponse.get('Set-Cookie')
+  it('should be able to refresh token', async () => {
+    const { refreshToken } = await createAndAuthenticateUser(app)
 
     const response = await request(app.server)
       .patch('/token/refresh')
-      .set('Cookie', cookies)
-      .send()
+      .set('Authorization', `Bearer ${refreshToken}`)
 
     expect(response.statusCode).toEqual(200)
-    expect(response.body).toEqual({
-      token: expect.any(String),
-    })
-    expect(response.get('Set-Cookie')).toEqual([
-      expect.stringContaining('refreshToken='),
-    ])
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        token: expect.any(String),
+        refreshToken: expect.any(String),
+      }),
+    )
   })
 })
