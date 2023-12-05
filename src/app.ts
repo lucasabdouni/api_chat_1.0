@@ -2,12 +2,14 @@ import fastify from 'fastify'
 import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
 import fastifyCors from '@fastify/cors'
+import fastifyWebsocket from '@fastify/websocket'
 
 import { env } from './env'
 import { ZodError } from 'zod'
 
 import { messageRoutes } from './http/controllers/messages/routes'
 import { userRoutes } from './http/controllers/users/routes'
+import { messageRoutesWebSocket } from './http/controllers/websocket/send-message'
 
 export const app = fastify()
 
@@ -15,8 +17,12 @@ app.register(fastifyCors, {
   origin: '*',
   credentials: true,
 })
+
+app.register(fastifyWebsocket)
+
 app.register(userRoutes)
 app.register(messageRoutes)
+app.register(messageRoutesWebSocket)
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
