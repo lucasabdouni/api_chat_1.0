@@ -5,7 +5,7 @@ import { execSync } from 'node:child_process'
 import { Environment } from 'vitest'
 import { PrismaClient } from '@prisma/client'
 
-// postgresql://docker:docker@localhost:5432/apisolid?schema=public
+// postgresql://docker:docker@localhost:5432/apichat?schema=public
 
 const prisma = new PrismaClient()
 
