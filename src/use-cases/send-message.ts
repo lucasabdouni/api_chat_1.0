@@ -1,6 +1,5 @@
 import { MessagesRepository } from './../repositories/messages-repository'
 import { UsersRepository } from '@/repositories/users-repository'
-import { Message } from '@prisma/client'
 import { UserNotExists } from './errors/user-not-exists'
 
 interface SendMessageUseCaseRequest {
@@ -8,8 +7,18 @@ interface SendMessageUseCaseRequest {
   userId: string
 }
 
+interface MessageProps {
+  id: string
+  text: string
+  created_at: Date
+  user_id: string
+  user: {
+    name: string
+  }
+}
+
 interface SendMessageUseCaseResponse {
-  message: Message
+  message: MessageProps
 }
 
 export class SendMessageUseCase {
@@ -28,10 +37,22 @@ export class SendMessageUseCase {
       throw new UserNotExists()
     }
 
-    const message = await this.messagesRepository.create({
+    const { name } = checkUserExists
+
+    const messageCreate = await this.messagesRepository.create({
       text,
       user_id: userId,
     })
+
+    const message: MessageProps = {
+      id: messageCreate.id,
+      text: messageCreate.text,
+      user_id: messageCreate.user_id,
+      created_at: messageCreate.created_at,
+      user: {
+        name,
+      },
+    }
 
     return { message }
   }

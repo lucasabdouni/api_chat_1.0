@@ -12,7 +12,15 @@ export class PrismaMessagesRepository implements MessagesRepository {
   }
 
   async listMessages() {
-    const messages = await prisma.message.findMany()
+    const messages = await prisma.message.findMany({
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    })
 
     return messages
   }

@@ -8,6 +8,8 @@ export async function list(request: FastifyRequest, reply: FastifyReply) {
 
   const messages = await listMessages.execute()
 
+  console.log(messages)
+
   return reply.status(200).send({
     messages,
   })

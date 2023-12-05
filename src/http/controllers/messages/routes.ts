@@ -1,7 +1,8 @@
-import { FastifyInstance } from 'fastify'
+import { FastifyInstance, FastifyRequest } from 'fastify'
 import { verifyJwt } from '../middlewares/verify-jwt'
 import { send } from './send'
 import { list } from './list'
+import { prisma } from '@/lib/prisma'
 
 export async function messageRoutes(app: FastifyInstance) {
   /** Authenticated **/
