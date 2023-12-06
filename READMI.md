@@ -2,9 +2,24 @@
 
 Chat style app.
 
-Start docker container:
+link frontend em nextJs: 
+github.com/lucasabdouni/web-chat-1.0
+
+# Start docker container:
 
 docker compose up -d
+
+# Start Project:
+
+Criar um arquivo .env na pasta raiz do projeto e adicionar as seguintes variaveis:
+
+NODE_ENV=dev
+JWT_SECRET=apichatjwt
+DATABASE_URL="postgresql://docker:docker@localhost:5432/ap
+
+npm install;
+npx prisma migrate dev;
+npm run dev:server;
 
 ## RFs (Requisitos functionais)
 
